@@ -53,7 +53,7 @@ if (!isNaN(edad)) {
 ## ✍️ Autor
 
 **Jose Patiño**  
-Desarrollador en formación | Enfocado en JavaScript, HTML, CSS y desarrollo web.
+Desarrollador full stack en formación, con enfoque en el desarrollo web moderno utilizando tecnologías como JavaScript, HTML, CSS, y bases de datos. Este repositorio documenta mi proceso de aprendizaje práctico, desde la lógica de programación hasta la interacción con el navegador y futuras implementaciones backend.
 
 - 🔗 GitHub: [@JosepoMP]([https://github.com/josepatino](https://github.com/JosepoMP)) 
 - 📧 Email: josepatinohincapie@gmail.com
