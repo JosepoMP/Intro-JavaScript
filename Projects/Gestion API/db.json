@@ -1,0 +1,39 @@
+{
+  "productos": [
+    {
+      "id": "2f6c",
+      "nombre": "manzana",
+      "precio": 2000
+    },
+    {
+      "id": "68e8",
+      "nombre": "popo",
+      "precio": 12
+    },
+    {
+      "id": "a723",
+      "nombre": "jaja",
+      "precio": 20
+    },
+    {
+      "id": "b75e",
+      "nombre": "federico",
+      "precio": 1000
+    },
+    {
+      "id": "88a8",
+      "nombre": "arroz",
+      "precio": 9000
+    },
+    {
+      "id": "b020",
+      "nombre": "leche",
+      "precio": 9000
+    },
+    {
+      "id": "fc7d",
+      "nombre": "alejandro",
+      "precio": 1000
+    }
+  ]
+}
