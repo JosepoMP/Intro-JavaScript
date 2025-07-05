@@ -1,4 +1,4 @@
-<h1 align="center">✨ Intro‑JavaScript ✨</h1>
+<h1 align="center"> Intro‑JavaScript 🧠</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/JavaScript-Learning-orange?logo=javascript" />
@@ -15,24 +15,23 @@
 ¡Hola! Soy José 👋  
 Este repo es un recorrido por mi aprendizaje en **JavaScript**. Aquí guardo ejercicios, mini proyectos, y experimentos con cosas como el DOM, funciones, arrays, eventos, APIs y más.
 
-Lo construí como una bitácora divertida, práctica y muy mía 🧠🔥  
 Cada carpeta representa una etapa o reto de mi aprendizaje.
 
 ---
 
 ## 🧪 Proyectos y ejercicios
 
-| Carpeta                         | ¿Qué hay aquí? |
-|--------------------------------|----------------|
-| `01-hola-js/`                  | Primeros pasos en JS, consola, alertas, tipos de datos |
-| `02-variables-operadores/`     | Variables `let`, `const`, operaciones, lógica básica |
-| `03-funciones/`                | Declaración y uso de funciones, parámetros, retornos |
-| `04-dom-interaccion/`          | Eventos, botones, inputs, respuestas dinámicas |
-| `05-condicionales/`           | `if`, `else`, operadores lógicos y comparación |
-| `06-arrays-objetos/`           | `.push()`, `.map()`, `.filter()`, objetos y más |
-| `07-async-fetch-api/`          | Llamados a APIs, uso de `fetch`, `async/await` |
-| `08-retos-practicos/`          | Mini desafíos para practicar lógica real ✨ |
-| `extras/`                      | Experimentos, cosas que pruebo solo por curiosidad 🧪 |
+| ¿Qué hay aquí? |
+------------------
+| Primeros pasos en JS, consola, alertas, tipos de datos |
+| Variables `let`, `const`, operaciones, lógica básica |
+| Declaración y uso de funciones, parámetros, retornos |
+| Eventos, botones, inputs, respuestas dinámicas |
+| `if`, `else`, operadores lógicos y comparación |
+| `.push()`, `.map()`, `.filter()`, objetos y más |
+| Llamados a APIs, uso de `fetch`, `async/await` |
+| Mini desafíos para practicar lógica real ✨ |
+| Experimentos, cosas que pruebo solo por curiosidad 🧪 |
 
 ---
 
@@ -40,7 +39,7 @@ Cada carpeta representa una etapa o reto de mi aprendizaje.
 
 - 🧠 **JavaScript (ES6+)**
 - 🌐 HTML + DOM
-- 🎨 Un poco de CSS (¡para darle flow a los proyectos!)
+- 🎨 Un poco de CSS
 - 🔄 `fetch()` y APIs públicas
 - 🧩 Pensamiento lógico y resolución de problemas
 
