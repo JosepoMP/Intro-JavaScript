@@ -7,7 +7,6 @@ Este proyecto es una práctica de consumo de APIs usando JavaScript puro, `fetch
 
 ## 📁 Estructura del Proyecto
 
-```
 Entregable_03v2/
 │
 ├── index.html         # Interfaz principal de usuario
