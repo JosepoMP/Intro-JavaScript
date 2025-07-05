@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css">
+  <title>Gestión de Productos</title>
+
+</head>
+<body>
+  <h1>Gestión de Productos</h1>
+
+  <form id="productoForm">
+    <input type="text" id="nombre" placeholder="Nombre del producto" required />
+    <input type="number" id="precio" placeholder="Precio" required />
+    <button type="submit">Agregar Producto</button>
+  </form>
+
+  <div id="productos"></div>
+
+  <script>
+    const apiUrl = 'http://localhost:3000/productos';
+
+    const productoForm = document.getElementById('productoForm');
+    const productosDiv = document.getElementById('productos');
+
+    // Mostrar productos
+    async function obtenerProductos() {
+      try {
+        const res = await fetch(apiUrl);
+        const productos = await res.json();
+        productosDiv.innerHTML = '';
+        productos.forEach(producto => {
+          const div = document.createElement('div');
+          div.className = 'producto';
+          div.innerHTML = `
+            <span id="span-${producto.id}"><strong>${producto.nombre}</strong> - $${producto.precio}</span>
+            <button onclick="eliminarProducto('${producto.id}')">Eliminar</button>
+            <button onclick="editarProducto('${producto.id}')">Editar</button>
+          `;
+          productosDiv.appendChild(div);
+        });
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+      }
+    }
+
+    // Crear producto
+    productoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const precio = parseFloat(document.getElementById('precio').value);
+
+      if (!nombre || isNaN(precio)) {
+        alert('Por favor completa correctamente los campos.');
+        return;
+      }
+
+      const nuevoProducto = { nombre, precio };
+
+      try {
+        await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(nuevoProducto)
+        });
+        productoForm.reset();
+        obtenerProductos();
+      } catch (error) {
+        console.error('Error al crear producto:', error);
+      }
+    });
+
+    // Eliminar producto
+    async function eliminarProducto(id) {
+      try {
+        await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+        obtenerProductos();
+      } catch (error) {
+        console.error('Error al eliminar producto:', error);
+      }
+    }
+
+    // Editar producto inline
+    async function editarProducto(id) {
+      const span = document.getElementById(`span-${id}`);
+      const [nombre, precio] = span.textContent.split(' - $');
+      span.innerHTML = `
+        <input id="edit-nombre-${id}" value="${nombre.replace(/<[^>]*>?/gm, '')}" style="width: 100px;" />
+        <input id="edit-precio-${id}" type="number" value="${precio}" style="width: 70px;" />
+        <button onclick="guardarEdicion('${id}')">Guardar</button>
+        <button onclick="cancelarEdicion('${id}', '${nombre}', '${precio}')">Cancelar</button>
+      `;
+    }
+
+    async function guardarEdicion(id) {
+      const nombre = document.getElementById(`edit-nombre-${id}`).value;
+      const precio = parseFloat(document.getElementById(`edit-precio-${id}`).value);
+      if (!nombre || isNaN(precio)) {
+        alert('Por favor completa correctamente los campos.');
+        return;
+      }
+      try {
+        await fetch(`${apiUrl}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nombre, precio })
+        });
+        obtenerProductos();
+      } catch (error) {
+        console.error('Error al actualizar producto:', error);
+      }
+    }
+
+    function cancelarEdicion(id, nombre, precio) {
+      const span = document.getElementById(`span-${id}`);
+      span.innerHTML = `<strong>${nombre}</strong> - $${precio}`;
+    }
+
+    // Inicial
+    obtenerProductos();
+  </script>
+</body>
+</html>
