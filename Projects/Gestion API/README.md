@@ -102,7 +102,7 @@ El archivo `gestionAPI.js` está vinculado desde el HTML y maneja todos los even
 Proyecto realizado como parte del entrenamiento académico en desarrollo web.
 
 Autor: **Jose Patiño**  
-Contacto: [LinkedIn](https://www.linkedin.com) | [Instagram](https://www.instagram.com) | Gmail: `tuemail@gmail.com`
+Contacto: [LinkedIn](https://www.linkedin.com/in/jose-pati%C3%B1o-77b1892ab/) | [Instagram](https://www.instagram.com/josemig.p/) | Gmail: `josepatinohincapie@gmail.com`
 
 ---
 
