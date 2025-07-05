@@ -21,17 +21,12 @@ Cada carpeta representa una etapa o reto de mi aprendizaje.
 
 ## 🧪 Proyectos y ejercicios
 
- ¿Qué hay aquí? 
-------------------
-| Primeros pasos en JS, consola, alertas, tipos de datos |
-| Variables `let`, `const`, operaciones, lógica básica |
-| Declaración y uso de funciones, parámetros, retornos |
-| Eventos, botones, inputs, respuestas dinámicas |
-| `if`, `else`, operadores lógicos y comparación |
-| `.push()`, `.map()`, `.filter()`, objetos y más |
-| Llamados a APIs, uso de `fetch`, `async/await` |
-| Mini desafíos para practicar lógica real ✨ |
-| Experimentos, cosas que pruebo solo por curiosidad 🧪 |
+| Proyecto                        | ¿Qué hace?                                                                 |
+|---------------------------------|-----------------------------------------------------------------------------|
+| **🧩 Gestion API**              | Proyecto que practica el consumo de APIs usando `fetch()` y `async/await`. Ideal para entender cómo funcionan las peticiones y respuestas HTTP de forma dinámica. |
+| **🛒 Gestión de Productos**     | App interactiva que simula un sistema CRUD de productos. Maneja objetos, formularios, DOM y validaciones. Muy útil para entender el flujo de datos. |
+| **🧠 Interactive System**       | Sistema que responde a acciones del usuario. Uso avanzado de eventos, condicionales y manipulación del DOM para crear experiencias más realistas. |
+
 
 ---
 
