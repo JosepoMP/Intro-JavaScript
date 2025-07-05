@@ -1,68 +1,84 @@
-# Intro-JavaScript 📚
+# Intro‑JavaScript 🧠
 
-Este es un espacio dedicado al estudio y práctica del lenguaje JavaScript desde sus fundamentos. Este espacio reúne ejercicios prácticos, scripts de prueba, mini proyectos interactivos y experimentos personales orientados a comprender y dominar los conceptos esenciales del lenguaje.
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)  
+![License](https://img.shields.io/badge/License-MIT-green.svg)  
+![Status](https://img.shields.io/badge/Build-Passing-brightgreen)  
+![Visits](https://komarev.com/ghpvc/?username=JosepoMP&label=Vistas&color=blue)
 
----
-
-## 📌 Content
-
-El repositorio está organizado temáticamente, y se irá ampliando progresivamente con nuevos ejercicios y proyectos:
-
-| Folder                 | Descripción                                                                 |
-|------------------------|-----------------------------------------------------------------------------|
-| **01-variables-operators**   | Declaración de variables, tipos de datos, operadores aritméticos y lógicos. |
-| **02-conditionals**          | Uso de `if`, `else`, `switch` y validación de datos.                        |
-| **03-functions**             | Definición, invocación, parámetros y retorno de funciones.                  |
-| **04-user-interaction**      | Captura de datos con `prompt`, `alert`, `console.log`.                      |
-| **05-mini-projects**         | Scripts completos que resuelven problemas concretos mediante lógica JS.     |
+¡Bienvenido a **Intro‑JavaScript**, el repositorio resumen de mis proyectos básicos con JavaScript! Aquí vas a encontrar desde ejercicios de lógica, manipulación del DOM, hasta pequeños retos funcionales.
 
 ---
 
-## 💻 Ejecución de los ejercicios
+## 📌 Tabla de contenidos
 
-Todos los ejercicios están diseñados para ser ejecutados directamente desde la consola del navegador web.
-
-### Instrucciones:
-
-1. Abre tu navegador (Google Chrome, Firefox, Edge, etc.).
-2. Presiona `F12` o `Ctrl + Shift + I` para abrir las herramientas de desarrollador.
-3. Dirígete a la pestaña **Consola**.
-4. Copia y pega el contenido del archivo `.js` correspondiente.
-5. Presiona `Enter` y observa los resultados.
+- [Acerca de](#-acerca-de)  
+- [Proyectos destacados](#-proyectos‑destacados)  
+- [Tecnologías usadas](#-tecnologías‑usadas)  
+- [Instalación & uso](#-instalación--uso)  
+- [Contribuciones](#-contribuciones)  
+- [Contacto](#-contacto)  
 
 ---
 
-## 🧪 Ejemplo destacado
+## ℹ️ Acerca de
 
-Uno de los scripts incluidos es un sistema interactivo que solicita nombre y edad al usuario, y genera un mensaje personalizado basado en esa información.
+Este repositorio nace de mi viaje aprendiendo JavaScript 🛤️. Aquí recopilo:
+- **Ejercicios paso a paso**
+- **Mini proyectos** para practicar lógica y DOM
+- Retos para comprender funciones, objetos y arrays
 
-```javascript
-let nombre = prompt("¿Cuál es tu nombre?");
-let edad = Number(prompt("¿Cuál es tu edad?"));
+Mi objetivo: reforzar lo práctico y divertido de programar con JS.
 
-if (!isNaN(edad)) {
-  if (edad < 18) {
-    console.log(`Hola ${nombre}, sigue aprendiendo. ¡Vas por buen camino!`);
-  } else {
-    console.log(`Hola ${nombre}, es hora de explorar nuevas oportunidades. 🚀`);
-  }
-} else {
-  console.error("Por favor ingresa una edad válida.");
-}
-```
-## ✍️ Autor
+---
 
-**Jose Patiño**  
-Desarrollador full stack en formación, con enfoque en el desarrollo web moderno utilizando tecnologías como JavaScript, HTML, CSS, y bases de datos. Este repositorio documenta mi proceso de aprendizaje práctico, desde la lógica de programación hasta la interacción con el navegador y futuras implementaciones backend.
+## 🚀 Proyectos destacados
 
-- 🔗 GitHub: [@JosepoMP]([https://github.com/josepatino](https://github.com/JosepoMP)) 
-- 📧 Email: josepatinohincapie@gmail.com
-- 🌐 Portafolio: https://tuportafolio.com 
-- 💼 LinkedIn: https://linkedin.com/in/josepatino
+| Proyecto                    | Descripción                                                                 |
+|----------------------------|-----------------------------------------------------------------------------|
+| **01‑hola‑js/**           | Hola mundo desde la consola y alertas. Introducción a variables y tipos.   |
+| **02‑calculadora‑DOM/**   | Mini app con inputs y eventos para sumar, restar y mostrar resultados.     |
+| **03‑reto‑arrays/**       | Práctica con métodos como `.map()`, `.filter()` y `.reduce()`.             |
+| **04‑fetch‑API/**         | Consume una API pública y muestra resultados en pantalla.                  |
+| **...**                   | Y varios ejercicios extra en la carpeta `ejercicios/`.                     |
 
-## 📢 Licencia
+👉 Si querés ver más, foyéate todas las carpetas y probalos vos mismo.
 
-Este proyecto está licenciado bajo la Licencia MIT.  
-Consulta el archivo [LICENSE](LICENSE) para más información.
+---
 
-> _“La práctica no hace al maestro. La práctica con intención, mejora constante y curiosidad, sí.”_
+## 🛠️ Tecnologías usadas
+
+- 💻 JavaScript (ES6+): `let`, `const`, arrow functions, módulos, promesas/async-await  
+- 🧩 HTML y CSS básicos para manipulación del DOM  
+- 🌐 Fetch API para llamadas HTTP  
+- 🧪 Estructuras de datos: arrays, objetos, métodos funcionales  
+
+---
+
+## ⚙️ Instalación y uso
+
+1. Cloná el repo:
+   ```bash
+   git clone https://github.com/JosepoMP/Intro-JavaScript.git
+   ```
+2. Entrá a la carpeta de tu proyecto favorito, por ej.:
+   ```bash
+   cd Intro-JavaScript/02-calculadora‑DOM/
+   ```
+3. Abrí `index.html` en tu navegador o serví el folder con alguna extensión (Live Server de VSCode, por ejemplo).
+
+---
+
+## 🤝 Contribuciones
+
+Este repo es personal, pero si querés aportar ideas o mejoras para ejercitar JavaScript, ¡dale! Cualquier PR con código limpio y comentado es bienvenido.
+
+---
+
+## 📬 Contacto
+
+- Sígueme en GitHub: [@JosepoMP](https://github.com/JosepoMP)  
+- Escríbeme si querés sugerencias, colaboraciones o tips para aprender JS.  
+
+---
+
+✨ _¡Gracias por pasar y explorar mis proyectos! Este README está hecho con 💛 por José._
