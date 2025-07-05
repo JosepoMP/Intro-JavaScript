@@ -1,84 +1,88 @@
-# Intro‑JavaScript 🧠
+<h1 align="center">✨ Intro‑JavaScript ✨</h1>
 
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)  
-![License](https://img.shields.io/badge/License-MIT-green.svg)  
-![Status](https://img.shields.io/badge/Build-Passing-brightgreen)  
-![Visits](https://komarev.com/ghpvc/?username=JosepoMP&label=Vistas&color=blue)
+<p align="center">
+  <img src="https://img.shields.io/badge/JavaScript-Learning-orange?logo=javascript" />
+  <img src="https://img.shields.io/badge/Status-En%20proceso-FF6B6B" />
+  <img src="https://komarev.com/ghpvc/?username=JosepoMP&label=Vistas&color=orange" />
+</p>
 
-¡Bienvenido a **Intro‑JavaScript**, el repositorio resumen de mis proyectos básicos con JavaScript! Aquí vas a encontrar desde ejercicios de lógica, manipulación del DOM, hasta pequeños retos funcionales.
-
----
-
-## 📌 Tabla de contenidos
-
-- [Acerca de](#-acerca-de)  
-- [Proyectos destacados](#-proyectos‑destacados)  
-- [Tecnologías usadas](#-tecnologías‑usadas)  
-- [Instalación & uso](#-instalación--uso)  
-- [Contribuciones](#-contribuciones)  
-- [Contacto](#-contacto)  
+<p align="center">💡 Repositorio donde voy documentando mi proceso aprendiendo JavaScript, desde lo más básico hasta proyectos más retadores.<br> Ideal para principiantes que quieren practicar con ejemplos reales, sencillos y claros.</p>
 
 ---
 
-## ℹ️ Acerca de
+## 🌟 Sobre este repo
 
-Este repositorio nace de mi viaje aprendiendo JavaScript 🛤️. Aquí recopilo:
-- **Ejercicios paso a paso**
-- **Mini proyectos** para practicar lógica y DOM
-- Retos para comprender funciones, objetos y arrays
+¡Hola! Soy José 👋  
+Este repo es un recorrido por mi aprendizaje en **JavaScript**. Aquí guardo ejercicios, mini proyectos, y experimentos con cosas como el DOM, funciones, arrays, eventos, APIs y más.
 
-Mi objetivo: reforzar lo práctico y divertido de programar con JS.
-
----
-
-## 🚀 Proyectos destacados
-
-| Proyecto                    | Descripción                                                                 |
-|----------------------------|-----------------------------------------------------------------------------|
-| **01‑hola‑js/**           | Hola mundo desde la consola y alertas. Introducción a variables y tipos.   |
-| **02‑calculadora‑DOM/**   | Mini app con inputs y eventos para sumar, restar y mostrar resultados.     |
-| **03‑reto‑arrays/**       | Práctica con métodos como `.map()`, `.filter()` y `.reduce()`.             |
-| **04‑fetch‑API/**         | Consume una API pública y muestra resultados en pantalla.                  |
-| **...**                   | Y varios ejercicios extra en la carpeta `ejercicios/`.                     |
-
-👉 Si querés ver más, foyéate todas las carpetas y probalos vos mismo.
+Lo construí como una bitácora divertida, práctica y muy mía 🧠🔥  
+Cada carpeta representa una etapa o reto de mi aprendizaje.
 
 ---
 
-## 🛠️ Tecnologías usadas
+## 🧪 Proyectos y ejercicios
 
-- 💻 JavaScript (ES6+): `let`, `const`, arrow functions, módulos, promesas/async-await  
-- 🧩 HTML y CSS básicos para manipulación del DOM  
-- 🌐 Fetch API para llamadas HTTP  
-- 🧪 Estructuras de datos: arrays, objetos, métodos funcionales  
+| Carpeta                         | ¿Qué hay aquí? |
+|--------------------------------|----------------|
+| `01-hola-js/`                  | Primeros pasos en JS, consola, alertas, tipos de datos |
+| `02-variables-operadores/`     | Variables `let`, `const`, operaciones, lógica básica |
+| `03-funciones/`                | Declaración y uso de funciones, parámetros, retornos |
+| `04-dom-interaccion/`          | Eventos, botones, inputs, respuestas dinámicas |
+| `05-condicionales/`           | `if`, `else`, operadores lógicos y comparación |
+| `06-arrays-objetos/`           | `.push()`, `.map()`, `.filter()`, objetos y más |
+| `07-async-fetch-api/`          | Llamados a APIs, uso de `fetch`, `async/await` |
+| `08-retos-practicos/`          | Mini desafíos para practicar lógica real ✨ |
+| `extras/`                      | Experimentos, cosas que pruebo solo por curiosidad 🧪 |
 
 ---
 
-## ⚙️ Instalación y uso
+## ⚙️ Tecnologías
 
-1. Cloná el repo:
+- 🧠 **JavaScript (ES6+)**
+- 🌐 HTML + DOM
+- 🎨 Un poco de CSS (¡para darle flow a los proyectos!)
+- 🔄 `fetch()` y APIs públicas
+- 🧩 Pensamiento lógico y resolución de problemas
+
+---
+
+## 🚀 Cómo probar los proyectos
+
+1. Clona este repo:
    ```bash
    git clone https://github.com/JosepoMP/Intro-JavaScript.git
    ```
-2. Entrá a la carpeta de tu proyecto favorito, por ej.:
+2. Entra a cualquier carpeta, por ejemplo:
    ```bash
-   cd Intro-JavaScript/02-calculadora‑DOM/
+   cd Intro-JavaScript/04-dom-interaccion/
    ```
-3. Abrí `index.html` en tu navegador o serví el folder con alguna extensión (Live Server de VSCode, por ejemplo).
+3. Abre `index.html` en tu navegador  
+   (o usa una extensión como Live Server si estás en VSCode)
 
 ---
 
-## 🤝 Contribuciones
+## ✍️ Sobre mí
 
-Este repo es personal, pero si querés aportar ideas o mejoras para ejercitar JavaScript, ¡dale! Cualquier PR con código limpio y comentado es bienvenido.
+Soy José, estudiante, coder y gymbro en progreso 💪  
+Aprender JavaScript no ha sido fácil, pero me emociona ver lo mucho que he avanzado.  
+Este repositorio es una mezcla entre práctica, constancia y amor por el aprendizaje.  
 
----
-
-## 📬 Contacto
-
-- Sígueme en GitHub: [@JosepoMP](https://github.com/JosepoMP)  
-- Escríbeme si querés sugerencias, colaboraciones o tips para aprender JS.  
+💬 Me gusta escribir código que sea entendible, ordenado y divertido.  
+📚 Siempre estoy buscando cómo aprender mejor (y enseñar también).
 
 ---
 
-✨ _¡Gracias por pasar y explorar mis proyectos! Este README está hecho con 💛 por José._
+## 🧡 Gracias por pasar
+
+Este proyecto está en construcción constante.  
+Si te sirvió, te inspiró o simplemente te gustó el diseño, ¡estás invitado a seguirme!
+
+<p align="center">
+  <a href="https://github.com/JosepoMP" target="_blank"><img src="https://img.shields.io/badge/GitHub-@JosepoMP-181717?logo=github" /></a>
+  <a href="mailto:jos*****@gmail.com"><img src="https://img.shields.io/badge/Gmail-Contacto-D14836?logo=gmail&logoColor=white" /></a>
+  <a href="https://www.linkedin.com/in/josepatino" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-José_Patiño-0077B5?logo=linkedin&logoColor=white" /></a>
+</p>
+
+---
+
+<p align="center"><i>Hecho con pasión, paciencia y café ☕</i></p>
