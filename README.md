@@ -21,7 +21,7 @@ Cada carpeta representa una etapa o reto de mi aprendizaje.
 
 ## 🧪 Proyectos y ejercicios
 
-| ¿Qué hay aquí? |
+ ¿Qué hay aquí? 
 ------------------
 | Primeros pasos en JS, consola, alertas, tipos de datos |
 | Variables `let`, `const`, operaciones, lógica básica |
