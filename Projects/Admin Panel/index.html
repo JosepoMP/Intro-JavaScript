@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/modal.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>AdminPanel</h2>
+    <nav><ul><li>Usuarios</li></ul></nav>
+  </aside>
+
+  <header class="header"><h1>Administrador</h1></header>
+
+  <main class="content">
+    <button id="addUserBtn">Añadir Usuario</button>
+    <div id="toast" class="toast hidden"></div>
+    <div id="loader" class="loader hidden"></div>
+    <table id="usersTable">
+      <thead>
+        <tr>
+          <th>Nombre</th><th>Email</th><th>Teléfono</th>
+          <th>Matrícula</th><th>Fecha ingreso</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+
+  <div class="modal hidden" id="userModal">
+    <form id="userForm">
+      <h2 id="formTitle">Crear Usuario</h2>
+      <input type="hidden" id="userId" />
+      <input type="text" id="name" placeholder="Nombre completo" required />
+      <input type="email" id="email" placeholder="Correo electrónico" required />
+      <input type="text" id="phone" placeholder="Teléfono" required />
+      <input type="text" id="enrollNumber" placeholder="Matrícula (6 dígitos)" required maxlength="6" />
+      <input type="date" id="dateOfAdmission" required />
+      <div class="modal-actions">
+        <button type="submit">Guardar</button>
+        <button type="button" id="cancelBtn">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
