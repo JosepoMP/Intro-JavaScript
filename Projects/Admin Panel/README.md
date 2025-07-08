@@ -28,6 +28,18 @@ Proporcionar una plataforma intuitiva y poderosa que simplifique la gestión aca
 
 ---
 
+## 🧠 ¿Qué hace este proyecto?
+
+Este es un **Panel de Administración web** que simula la gestión de usuarios en una plataforma. Incluye:
+
+- 📋 Tabla de usuarios
+- 🧑‍💼 Formulario para agregar nuevos usuarios
+- 🧭 Navegación lateral
+- 🎨 Estilo moderno y responsive
+- ⚙️ Lógica básica en JavaScript para interacción
+
+---
+
 ## ✨ **Características Principales**
 
 <table>
