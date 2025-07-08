@@ -134,7 +134,9 @@ graph TB
     style A fill:#8B5CF6,stroke:#7C3AED,color:#fff
     style K fill:#10B981,stroke:#059669,color:#fff
     style L fill:#F59E0B,stroke:#D97706,color:#fff
+
 ```
+---
 ## 🛠️ Cómo usarlo
 
 1. **Clona el repositorio o descarga los archivos:**
