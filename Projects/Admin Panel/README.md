@@ -3,12 +3,12 @@
 
 # 🎓 CRUD Students System
 ### *Sistema de Gestión Académica Completo*
-
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![JSON Server](https://img.shields.io/badge/JSON_Server-000000?style=for-the-badge&logo=json&logoColor=white)](https://github.com/typicode/json-server)
-
+<p align="center">
+  <img src="https://img.shields.io/badge/Estado-En%20Desarrollo-yellow" />
+  <img src="https://img.shields.io/badge/HTML-100%25-orange" />
+  <img src="https://img.shields.io/badge/CSS-Custom%20Styles-blue" />
+  <img src="https://img.shields.io/badge/JS-Interactividad-yellowgreen" />
+</p>
 *Una aplicación web moderna y elegante para la gestión integral de estudiantes, construida con tecnologías web puras y arquitectura SPA.*
 
 [🚀 Demo en Vivo](#-instalación-rápida) • [📖 Documentación](#-características-principales) • [🛠️ Instalación](#-instalación-y-configuración) • [🤝 Contribuir](#-contribución)
