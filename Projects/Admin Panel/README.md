@@ -142,7 +142,7 @@ graph TB
 ```bash
 git clone https://github.com/tuusuario/admin_panel.git
 ```
----
+
 2. **Abre el archivo `index.html` en tu navegador favorito.**
 
 3. **Explora el panel:**
