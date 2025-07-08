@@ -87,29 +87,6 @@ Este es un **Panel de Administración web** que simula la gestión de usuarios e
 
 ---
 
-## 🖼️ **Capturas de Pantalla**
-
-<div align="center">
-
-### 📊 Dashboard Principal
-*Vista general con estadísticas en tiempo real*
-
-![Dashboard](https://via.placeholder.com/800x400/8B5CF6/FFFFFF?text=Dashboard+Principal)
-
-### 👥 Gestión de Estudiantes
-*CRUD completo con tabla interactiva*
-
-![Students](https://via.placeholder.com/800x400/10B981/FFFFFF?text=Gestión+de+Estudiantes)
-
-### 📱 Diseño Responsive
-*Perfecta adaptación a dispositivos móviles*
-
-![Mobile](https://via.placeholder.com/400x600/F59E0B/FFFFFF?text=Vista+Móvil)
-
-</div>
-
----
-
 ## 🏛️ **Arquitectura del Sistema**
 
 ```mermaid
