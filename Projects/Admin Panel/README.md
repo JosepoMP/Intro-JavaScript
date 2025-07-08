@@ -134,3 +134,58 @@ graph TB
     style A fill:#8B5CF6,stroke:#7C3AED,color:#fff
     style K fill:#10B981,stroke:#059669,color:#fff
     style L fill:#F59E0B,stroke:#D97706,color:#fff
+
+## 🛠️ Cómo usarlo
+
+1. **Clona el repositorio o descarga los archivos:**
+
+```bash
+git clone https://github.com/tuusuario/admin_panel.git
+```
+---
+2. **Abre el archivo `index.html` en tu navegador favorito.**
+
+3. **Explora el panel:**
+   - Usa el menú lateral para navegar
+   - Agrega usuarios mediante el formulario
+   - Observa cómo se actualiza la tabla
+
+---
+
+## 🚀 Funcionalidades destacadas
+
+✅ Panel de navegación lateral  
+✅ Tabla interactiva de usuarios  
+✅ Agregar nuevos usuarios dinámicamente  
+✅ Responsive: diseño adaptable a pantalla  
+✅ Código modular y bien comentado  
+
+---
+
+## 🌟 Posibles mejoras
+
+- 🔒 Agregar autenticación de administrador
+- 🧮 Conexión con base de datos real
+- 🪄 Validación avanzada de formularios
+- 📊 Gráficas y estadísticas con Chart.js
+
+---
+
+## 🙌 Autor
+
+- 💡 Proyecto realizado por [Jose Patiño](https://www.linkedin.com/in/tu_usuario) ✨
+
+---
+
+## 📬 Contacto
+
+<p align="left">
+  📧 Gmail: <a href="mailto:tucorreo@gmail.com">tucorreo@gmail.com</a>  
+  📷 Instagram: [@tu_usuario](https://www.instagram.com/tu_usuario)  
+</p>
+
+---
+
+<p align="center">
+  Hecho con ❤️ por Jose
+</p>
