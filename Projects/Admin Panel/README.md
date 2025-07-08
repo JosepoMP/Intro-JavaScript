@@ -182,7 +182,7 @@ git clone https://github.com/tuusuario/admin_panel.git
 ## 📬 Contacto
 
 <p align="left">
-  📧 Gmail: <a href="mailto:tucorreo@gmail.com">tucorreo@gmail.com</a>  
+  📧 Gmail: <a href="mailto:tucorreo@gmail.com">josepatinohincapie@gmail.com</a>  
   📷 Instagram: [@tu_usuario](https://www.instagram.com/tu_usuario)  
 </p>
 
