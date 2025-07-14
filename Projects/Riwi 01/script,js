@@ -1,45 +1,68 @@
-// Variables globales
-let currentUser = null
-let events = []
-let users = []
-let registrations = []
+// ======= GLOBAL STATE =======
+let currentUser = null;
+let events = [];
+let users = [];
+let registrations = [];
 
-// Inicialización
+// ======= INITIALIZATION =======
 document.addEventListener("DOMContentLoaded", () => {
-  loadData()
-  checkAuth()
-  setupEventListeners()
-})
+  loadData().then(() => {
+    checkAuth();
+    setupStaticEventListeners();
+  });
+});
 
-// Configurar event listeners
-function setupEventListeners() {
-  // Formulario de login
-  document.getElementById("login-form").addEventListener("submit", handleLogin)
+// ======= STATIC EVENT LISTENERS (ONCE) =======
+const setupStaticEventListeners = () => {
+  document.getElementById("login-form").addEventListener("submit", handleLogin);
+  document.getElementById("register-form").addEventListener("submit", handleRegister);
+  document.getElementById("event-form").addEventListener("submit", handleEventSubmit);
 
-  // Formulario de registro
-  document.getElementById("register-form").addEventListener("submit", handleRegister)
+  // Modal close on click outside
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modal");
+    if (e.target === modal) closeModal();
+  });
 
-  // Formulario de eventos
-  document.getElementById("event-form").addEventListener("submit", handleEventSubmit)
-}
+  // Dashboard navigation (SPA)
+  document.querySelectorAll(".dashboard-nav button").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const text = btn.textContent;
+      if (text === "Ver Eventos") showEvents();
+      else if (text === "Mis Eventos") showMyEvents();
+      else if (text === "Panel Admin") showAdmin();
+    });
+  });
 
-// Cargar datos desde db.json (simulado)
-async function loadData() {
+  // SPA navigation for login/register
+  document.querySelectorAll("[data-nav]").forEach(el => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const nav = el.getAttribute("data-nav");
+      if (nav === "login") showLogin();
+      else if (nav === "register") showRegister();
+    });
+  });
+
+  // Logout
+  document.getElementById("logout-btn")?.addEventListener("click", logout);
+};
+
+// ======= DATA LOADING =======
+const loadData = async () => {
   try {
-    const response = await fetch("db.json")
-    const data = await response.json()
-    events = data.events || []
-    users = data.users || []
-    registrations = data.registrations || []
+    const response = await fetch("db.json");
+    const data = await response.json();
+    events = data.events ?? [];
+    users = data.users ?? [];
+    registrations = data.registrations ?? [];
   } catch (error) {
-    console.error("Error cargando datos:", error)
-    // Datos de ejemplo si no se puede cargar db.json
-    loadDefaultData()
+    console.error("Error cargando datos:", error);
+    loadDefaultData();
   }
-}
+};
 
-// Datos por defecto
-function loadDefaultData() {
+const loadDefaultData = () => {
   users = [
     {
       id: 1,
@@ -59,8 +82,7 @@ function loadDefaultData() {
       lastName: "Doe",
       role: "user",
     },
-  ]
-
+  ];
   events = [
     {
       id: 1,
@@ -88,535 +110,543 @@ function loadDefaultData() {
       createdBy: 1,
       registeredCount: 0,
     },
-  ]
+  ];
+  registrations = [];
+};
 
-  registrations = []
-}
-
-// Verificar autenticación
-function checkAuth() {
-  const savedUser = localStorage.getItem("currentUser")
+// ======= AUTH & NAVIGATION =======
+const checkAuth = () => {
+  const savedUser = localStorage.getItem("currentUser");
   if (savedUser) {
-    currentUser = JSON.parse(savedUser)
-    showDashboard()
+    currentUser = JSON.parse(savedUser);
+    showDashboard();
   } else {
-    showLogin()
+    showLogin();
   }
-}
+};
 
-// Mostrar página de login
-function showLogin() {
-  hideAllPages()
-  document.getElementById("login-page").style.display = "block"
-  updateNavigation()
-}
+const showLogin = () => {
+  hideAllPages();
+  document.getElementById("login-page").style.display = "block";
+  updateNavigation();
+  document.getElementById("login-form").reset();
+};
 
-// Mostrar página de registro
-function showRegister() {
-  hideAllPages()
-  document.getElementById("register-page").style.display = "block"
-  updateNavigation()
-}
+const showRegister = () => {
+  hideAllPages();
+  document.getElementById("register-page").style.display = "block";
+  updateNavigation();
+  document.getElementById("register-form").reset();
+};
 
-// Mostrar dashboard
-function showDashboard() {
-  hideAllPages()
-  document.getElementById("dashboard-page").style.display = "block"
-  updateNavigation()
-  showEvents() // Mostrar eventos por defecto
-}
+const showDashboard = () => {
+  hideAllPages();
+  document.getElementById("dashboard-page").style.display = "block";
+  updateNavigation();
+  showEvents();
+};
 
-// Ocultar todas las páginas
-function hideAllPages() {
-  const pages = document.querySelectorAll(".page")
-  pages.forEach((page) => (page.style.display = "none"))
-}
+const hideAllPages = () => {
+  document.querySelectorAll(".page").forEach((page) => (page.style.display = "none"));
+};
 
-// Actualizar navegación
-function updateNavigation() {
-  const navLinks = document.getElementById("nav-links")
-  const userMenu = document.getElementById("user-menu")
-  const adminBtn = document.getElementById("admin-btn")
-
+const updateNavigation = () => {
+  const navLinks = document.getElementById("nav-links");
+  const userMenu = document.getElementById("user-menu");
+  const adminBtn = document.getElementById("admin-btn");
   if (currentUser) {
-    navLinks.style.display = "none"
-    userMenu.style.display = "block"
-    document.getElementById("username").textContent = currentUser.firstName
-
-    if (currentUser.role === "admin") {
-      adminBtn.style.display = "inline-block"
-    }
+    navLinks.style.display = "none";
+    userMenu.style.display = "block";
+    document.getElementById("username").textContent = currentUser.firstName;
+    if (adminBtn) adminBtn.style.display = currentUser.role === "admin" ? "inline-block" : "none";
   } else {
-    navLinks.style.display = "block"
-    userMenu.style.display = "none"
+    navLinks.style.display = "block";
+    userMenu.style.display = "none";
+    if (adminBtn) adminBtn.style.display = "none";
   }
-}
+};
 
-// Manejar login
-function handleLogin(e) {
-  e.preventDefault()
-
-  const username = document.getElementById("login-username").value
-  const password = document.getElementById("login-password").value
-
-  const user = users.find((u) => u.username === username && u.password === password)
-
+// ======= AUTH HANDLERS =======
+const handleLogin = (e) => {
+  e.preventDefault();
+  const username = document.getElementById("login-username").value.trim();
+  const password = document.getElementById("login-password").value;
+  const user = users.find((u) => u.username === username && u.password === password);
   if (user) {
-    currentUser = user
-    localStorage.setItem("currentUser", JSON.stringify(user))
-    showNotification("¡Bienvenido!", "success")
-    showDashboard()
+    currentUser = user;
+    localStorage.setItem("currentUser", JSON.stringify(user));
+    showNotification("¡Bienvenido!", "success");
+    showDashboard();
   } else {
-    showNotification("Usuario o contraseña incorrectos", "error")
+    showNotification("Usuario o contraseña incorrectos", "error");
   }
-}
+};
 
-// Manejar registro
-function handleRegister(e) {
-  e.preventDefault()
+const handleRegister = (e) => {
+  e.preventDefault();
+  const username = document.getElementById("reg-username").value.trim();
+  const email = document.getElementById("reg-email").value.trim();
+  const password = document.getElementById("reg-password").value;
+  const firstName = document.getElementById("reg-firstname").value.trim();
+  const lastName = document.getElementById("reg-lastname").value.trim();
 
-  const username = document.getElementById("reg-username").value
-  const email = document.getElementById("reg-email").value
-  const password = document.getElementById("reg-password").value
-  const firstName = document.getElementById("reg-firstname").value
-  const lastName = document.getElementById("reg-lastname").value
-
-  // Verificar si el usuario ya existe
-  if (users.find((u) => u.username === username || u.email === email)) {
-    showNotification("El usuario o email ya existe", "error")
-    return
+  if (!username || !email || !password || !firstName || !lastName) {
+    showNotification("Completa todos los campos", "error");
+    return;
   }
 
-  // Crear nuevo usuario
+  if (users.some((u) => u.username === username || u.email === email)) {
+    showNotification("El usuario o email ya existe", "error");
+    return;
+  }
+
   const newUser = {
-    id: users.length + 1,
+    id: getNextId(users),
     username,
     email,
     password,
     firstName,
     lastName,
     role: "user",
+  };
+  users.push(newUser);
+  showNotification("¡Registro exitoso! Ahora puedes iniciar sesión", "success");
+  showLogin();
+};
+
+const logout = () => {
+  currentUser = null;
+  localStorage.removeItem("currentUser");
+  showLogin();
+  showNotification("Sesión cerrada", "success");
+};
+
+// ======= DASHBOARD & EVENTS =======
+const showEvents = () => {
+  updateDashboardNav("Ver Eventos");
+  const content = document.getElementById("dashboard-content");
+  // Filter, sort, and search UI
+  content.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+      <h3>Eventos Disponibles</h3>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <input id="event-search" type="text" placeholder="Buscar evento..." style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc;">
+        <select id="event-category-filter" style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc;">
+          <option value="">Todas las categorías</option>
+          <option value="technology">Tecnología</option>
+          <option value="music">Música</option>
+          <option value="sports">Deportes</option>
+          <option value="education">Educación</option>
+          <option value="art">Arte</option>
+        </select>
+        <select id="event-sort" style="padding: 0.3rem; border-radius: 4px; border: 1px solid #ccc;">
+          <option value="date-asc">Fecha ↑</option>
+          <option value="date-desc">Fecha ↓</option>
+          <option value="price-asc">Precio ↑</option>
+          <option value="price-desc">Precio ↓</option>
+        </select>
+        ${currentUser.role === "admin" ? '<button id="create-event-btn" class="btn-primary">Crear Evento</button>' : ""}
+      </div>
+    </div>
+    <div class="events-grid" id="events-grid"></div>
+  `;
+  if (currentUser.role === "admin") {
+    document.getElementById("create-event-btn").onclick = () => openEventModal();
   }
+  // Initial render
+  renderEventsGrid();
+  // Attach filter/sort/search handlers
+  document.getElementById("event-search").addEventListener("input", renderEventsGrid);
+  document.getElementById("event-category-filter").addEventListener("change", renderEventsGrid);
+  document.getElementById("event-sort").addEventListener("change", renderEventsGrid);
+};
 
-  users.push(newUser)
-  showNotification("¡Registro exitoso! Ahora puedes iniciar sesión", "success")
-  showLogin()
+function renderEventsGrid() {
+  const search = document.getElementById("event-search").value.trim().toLowerCase();
+  const category = document.getElementById("event-category-filter").value;
+  const sort = document.getElementById("event-sort").value;
+  let filtered = events.slice();
+
+  if (search) {
+    filtered = filtered.filter(e =>
+      e.title.toLowerCase().includes(search) ||
+      e.description.toLowerCase().includes(search) ||
+      e.location.toLowerCase().includes(search)
+    );
+  }
+  if (category) {
+    filtered = filtered.filter(e => e.category === category);
+  }
+  filtered.sort((a, b) => {
+    switch (sort) {
+      case "date-asc":
+        return a.date.localeCompare(b.date) || a.time.localeCompare(b.time);
+      case "date-desc":
+        return b.date.localeCompare(a.date) || b.time.localeCompare(a.time);
+      case "price-asc":
+        return a.price - b.price;
+      case "price-desc":
+        return b.price - a.price;
+      default:
+        return 0;
+    }
+  });
+
+  const grid = document.getElementById("events-grid");
+  if (!filtered.length) {
+    grid.innerHTML = `<p style="grid-column: 1/-1;">No hay eventos disponibles.</p>`;
+  } else {
+    grid.innerHTML = filtered.map(eventCardHTML).join("");
+  }
+  attachEventCardHandlers();
 }
 
-// Cerrar sesión
-function logout() {
-  currentUser = null
-  localStorage.removeItem("currentUser")
-  showLogin()
-  showNotification("Sesión cerrada", "success")
-}
-
-// Mostrar eventos
-function showEvents() {
-  updateDashboardNav("Ver Eventos")
-  const content = document.getElementById("dashboard-content")
-
-  let html = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-            <h3>Eventos Disponibles</h3>
-            ${currentUser.role === "admin" ? '<button onclick="openEventModal()" class="btn-primary">Crear Evento</button>' : ""}
+const eventCardHTML = (event) => {
+  const isRegistered = registrations.some((r) => r.eventId === event.id && r.userId === currentUser.id);
+  const canEdit = currentUser.role === "admin" || event.createdBy === currentUser.id;
+  const isFull = (event.registeredCount ?? 0) >= event.capacity;
+  const eventDate = new Date(`${event.date}T${event.time}`);
+  const now = new Date();
+  const isPast = eventDate < now;
+  return `
+    <div class="event-card" data-event-id="${event.id}">
+      <h3>${event.title}</h3>
+      <p><strong>Fecha:</strong> ${event.date} a las ${event.time}</p>
+      <p><strong>Ubicación:</strong> ${event.location}</p>
+      <p><strong>Categoría:</strong> ${getCategoryName(event.category)}</p>
+      <p><strong>Precio:</strong> ${event.price}€</p>
+      <p><strong>Capacidad:</strong> ${event.registeredCount ?? 0}/${event.capacity}</p>
+      <p>${event.description}</p>
+      <div class="event-meta">
+        <div>
+          ${
+            isPast
+              ? `<span class="badge badge-gray">Finalizado</span>`
+              : isRegistered
+                ? `<button class="btn-warning unregister-btn">Cancelar Registro</button>`
+                : isFull
+                  ? `<button class="btn-disabled" disabled>Lleno</button>`
+                  : `<button class="btn-success register-btn">Registrarse</button>`
+          }
         </div>
-        <div class="events-grid">
-    `
+        ${canEdit
+          ? `<div>
+              <button class="btn-primary edit-btn">Editar</button>
+              <button class="btn-danger delete-btn">Eliminar</button>
+            </div>`
+          : ""
+        }
+      </div>
+    </div>
+  `;
+};
 
-  events.forEach((event) => {
-    const isRegistered = registrations.some((r) => r.eventId === event.id && r.userId === currentUser.id)
-    const canEdit = currentUser.role === "admin" || event.createdBy === currentUser.id
+const attachEventCardHandlers = () => {
+  document.querySelectorAll(".event-card").forEach(card => {
+    const eventId = Number(card.dataset.eventId);
+    card.querySelectorAll(".register-btn").forEach(btn => btn.onclick = () => registerForEvent(eventId));
+    card.querySelectorAll(".unregister-btn").forEach(btn => btn.onclick = () => unregisterFromEvent(eventId));
+    card.querySelectorAll(".edit-btn").forEach(btn => btn.onclick = () => editEvent(eventId));
+    card.querySelectorAll(".delete-btn").forEach(btn => btn.onclick = () => deleteEvent(eventId));
+  });
+};
 
-    html += `
-            <div class="event-card">
-                <h3>${event.title}</h3>
-                <p><strong>Fecha:</strong> ${event.date} a las ${event.time}</p>
-                <p><strong>Ubicación:</strong> ${event.location}</p>
-                <p><strong>Categoría:</strong> ${getCategoryName(event.category)}</p>
-                <p><strong>Precio:</strong> ${event.price}€</p>
-                <p><strong>Capacidad:</strong> ${event.registeredCount || 0}/${event.capacity}</p>
-                <p>${event.description}</p>
-                <div class="event-meta">
-                    <div>
-                        ${
-                          isRegistered
-                            ? '<button onclick="unregisterFromEvent(' +
-                              event.id +
-                              ')" class="btn-warning">Cancelar Registro</button>'
-                            : '<button onclick="registerForEvent(' +
-                              event.id +
-                              ')" class="btn-success">Registrarse</button>'
-                        }
-                    </div>
-                    ${
-                      canEdit
-                        ? `
-                        <div>
-                            <button onclick="editEvent(${event.id})" class="btn-primary">Editar</button>
-                            <button onclick="deleteEvent(${event.id})" class="btn-danger">Eliminar</button>
-                        </div>
-                    `
-                        : ""
-                    }
-                </div>
+const showMyEvents = () => {
+  updateDashboardNav("Mis Eventos");
+  const content = document.getElementById("dashboard-content");
+  const myEvents = events.filter(e => registrations.some(r => r.eventId === e.id && r.userId === currentUser.id));
+  content.innerHTML = `
+    <h3>Mis Eventos Registrados</h3>
+    ${myEvents.length === 0
+      ? "<p>No tienes eventos registrados.</p>"
+      : `<div class="events-grid">
+          ${myEvents.map(event => `
+            <div class="event-card" data-event-id="${event.id}">
+              <h3>${event.title}</h3>
+              <p><strong>Fecha:</strong> ${event.date} a las ${event.time}</p>
+              <p><strong>Ubicación:</strong> ${event.location}</p>
+              <p><strong>Precio:</strong> ${event.price}€</p>
+              <p>${event.description}</p>
+              <div class="event-meta">
+                <button class="btn-warning unregister-btn">Cancelar Registro</button>
+              </div>
             </div>
-        `
-  })
+          `).join("")}
+        </div>`
+    }
+  `;
+  attachEventCardHandlers();
+};
 
-  html += "</div>"
-  content.innerHTML = html
-}
-
-// Mostrar mis eventos
-function showMyEvents() {
-  updateDashboardNav("Mis Eventos")
-  const content = document.getElementById("dashboard-content")
-
-  const myRegistrations = registrations.filter((r) => r.userId === currentUser.id)
-  const myEvents = events.filter((e) => myRegistrations.some((r) => r.eventId === e.id))
-
-  let html = "<h3>Mis Eventos Registrados</h3>"
-
-  if (myEvents.length === 0) {
-    html += "<p>No tienes eventos registrados.</p>"
-  } else {
-    html += '<div class="events-grid">'
-    myEvents.forEach((event) => {
-      html += `
-                <div class="event-card">
-                    <h3>${event.title}</h3>
-                    <p><strong>Fecha:</strong> ${event.date} a las ${event.time}</p>
-                    <p><strong>Ubicación:</strong> ${event.location}</p>
-                    <p><strong>Precio:</strong> ${event.price}€</p>
-                    <p>${event.description}</p>
-                    <div class="event-meta">
-                        <button onclick="unregisterFromEvent(${event.id})" class="btn-warning">Cancelar Registro</button>
-                    </div>
-                </div>
-            `
-    })
-    html += "</div>"
-  }
-
-  content.innerHTML = html
-}
-
-// Mostrar panel de administración
-function showAdmin() {
+const showAdmin = () => {
   if (currentUser.role !== "admin") {
-    showNotification("No tienes permisos de administrador", "error")
-    return
+    showNotification("No tienes permisos de administrador", "error");
+    return;
   }
-
-  updateDashboardNav("Panel Admin")
-  const content = document.getElementById("dashboard-content")
-
-  let html = `
-        <h3>Panel de Administración</h3>
-        <div style="margin-bottom: 2rem;">
-            <h4>Estadísticas</h4>
-            <p>Total de usuarios: ${users.length}</p>
-            <p>Total de eventos: ${events.length}</p>
-            <p>Total de registros: ${registrations.length}</p>
-        </div>
-        
-        <h4>Gestión de Usuarios</h4>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Email</th>
-                    <th>Nombre</th>
-                    <th>Rol</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-    `
-
-  users.forEach((user) => {
-    html += `
+  updateDashboardNav("Panel Admin");
+  const content = document.getElementById("dashboard-content");
+  content.innerHTML = `
+    <h3>Panel de Administración</h3>
+    <div style="margin-bottom: 2rem;">
+      <h4>Estadísticas</h4>
+      <p>Total de usuarios: ${users.length}</p>
+      <p>Total de eventos: ${events.length}</p>
+      <p>Total de registros: ${registrations.length}</p>
+    </div>
+    <h4>Gestión de Usuarios</h4>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>ID</th><th>Usuario</th><th>Email</th><th>Nombre</th><th>Rol</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${users.map(user => `
+          <tr>
+            <td>${user.id}</td>
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td>${user.firstName} ${user.lastName}</td>
+            <td>${user.role}</td>
+            <td>
+              ${user.id !== currentUser.id
+                ? `<button class="btn-danger delete-user-btn" data-user-id="${user.id}">Eliminar</button>`
+                : "<span>-</span>"
+              }
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+    <h4 style="margin-top: 2rem;">Gestión de Registros</h4>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Usuario</th><th>Evento</th><th>Fecha Registro</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${registrations.map(reg => {
+          const user = users.find(u => u.id === reg.userId);
+          const event = events.find(e => e.id === reg.eventId);
+          return `
             <tr>
-                <td>${user.id}</td>
-                <td>${user.username}</td>
-                <td>${user.email}</td>
-                <td>${user.firstName} ${user.lastName}</td>
-                <td>${user.role}</td>
-                <td>
-                    ${
-                      user.id !== currentUser.id
-                        ? `<button onclick="deleteUser(${user.id})" class="btn-danger">Eliminar</button>`
-                        : "<span>-</span>"
-                    }
-                </td>
+              <td>${user ? `${user.firstName} ${user.lastName}` : "Usuario eliminado"}</td>
+              <td>${event ? event.title : "Evento eliminado"}</td>
+              <td>${reg.registeredAt ? new Date(reg.registeredAt).toLocaleString() : "N/A"}</td>
+              <td>
+                <button class="btn-danger delete-reg-btn" data-reg-id="${reg.id}">Eliminar</button>
+              </td>
             </tr>
-        `
-  })
+          `;
+        }).join("")}
+      </tbody>
+    </table>
+  `;
+  // Attach admin action handlers
+  document.querySelectorAll(".delete-user-btn").forEach(btn =>
+    btn.onclick = () => deleteUser(Number(btn.dataset.userId))
+  );
+  document.querySelectorAll(".delete-reg-btn").forEach(btn =>
+    btn.onclick = () => deleteRegistration(Number(btn.dataset.regId))
+  );
+};
 
-  html += `
-            </tbody>
-        </table>
-        
-        <h4 style="margin-top: 2rem;">Gestión de Registros</h4>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Evento</th>
-                    <th>Fecha Registro</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-    `
+const updateDashboardNav = (activeTab) => {
+  document.querySelectorAll(".dashboard-nav button").forEach(btn => {
+    btn.classList.toggle("active", btn.textContent === activeTab);
+  });
+};
 
-  registrations.forEach((reg) => {
-    const user = users.find((u) => u.id === reg.userId)
-    const event = events.find((e) => e.id === reg.eventId)
-
-    html += `
-            <tr>
-                <td>${user ? user.firstName + " " + user.lastName : "Usuario eliminado"}</td>
-                <td>${event ? event.title : "Evento eliminado"}</td>
-                <td>${reg.registeredAt || "N/A"}</td>
-                <td>
-                    <button onclick="deleteRegistration(${reg.id})" class="btn-danger">Eliminar</button>
-                </td>
-            </tr>
-        `
-  })
-
-  html += "</tbody></table>"
-  content.innerHTML = html
-}
-
-// Actualizar navegación del dashboard
-function updateDashboardNav(activeTab) {
-  const buttons = document.querySelectorAll(".dashboard-nav button")
-  buttons.forEach((btn) => btn.classList.remove("active"))
-
-  const activeButton = Array.from(buttons).find((btn) => btn.textContent === activeTab)
-  if (activeButton) {
-    activeButton.classList.add("active")
+// ======= EVENT REGISTRATION =======
+const registerForEvent = (eventId) => {
+  const event = events.find(e => e.id === eventId);
+  if (!event) return;
+  if (registrations.some(r => r.eventId === eventId && r.userId === currentUser.id)) {
+    showNotification("Ya estás registrado en este evento", "error");
+    return;
   }
-}
-
-// Registrarse a un evento
-function registerForEvent(eventId) {
-  const event = events.find((e) => e.id === eventId)
-  if (!event) return
-
-  // Verificar si ya está registrado
-  if (registrations.some((r) => r.eventId === eventId && r.userId === currentUser.id)) {
-    showNotification("Ya estás registrado en este evento", "error")
-    return
+  if ((event.registeredCount ?? 0) >= event.capacity) {
+    showNotification("El evento está lleno", "error");
+    return;
   }
-
-  // Verificar capacidad
-  const currentRegistrations = registrations.filter((r) => r.eventId === eventId).length
-  if (currentRegistrations >= event.capacity) {
-    showNotification("El evento está lleno", "error")
-    return
+  const eventDate = new Date(`${event.date}T${event.time}`);
+  if (eventDate < new Date()) {
+    showNotification("No puedes registrarte a un evento pasado", "error");
+    return;
   }
-
-  // Crear registro
-  const newRegistration = {
-    id: registrations.length + 1,
+  registrations.push({
+    id: getNextId(registrations),
     userId: currentUser.id,
-    eventId: eventId,
+    eventId,
     registeredAt: new Date().toISOString(),
+  });
+  event.registeredCount = (event.registeredCount ?? 0) + 1;
+  showNotification("¡Te has registrado exitosamente!", "success");
+  renderEventsGrid();
+};
+
+const unregisterFromEvent = (eventId) => {
+  const regIndex = registrations.findIndex(r => r.eventId === eventId && r.userId === currentUser.id);
+  if (regIndex === -1) {
+    showNotification("No estás registrado en este evento", "error");
+    return;
   }
-
-  registrations.push(newRegistration)
-
-  // Actualizar contador
-  event.registeredCount = (event.registeredCount || 0) + 1
-
-  showNotification("¡Te has registrado exitosamente!", "success")
-  showEvents() // Refrescar vista
-}
-
-// Cancelar registro de evento
-function unregisterFromEvent(eventId) {
-  const registrationIndex = registrations.findIndex((r) => r.eventId === eventId && r.userId === currentUser.id)
-
-  if (registrationIndex === -1) {
-    showNotification("No estás registrado en este evento", "error")
-    return
+  registrations.splice(regIndex, 1);
+  const event = events.find(e => e.id === eventId);
+  if (event && event.registeredCount > 0) event.registeredCount--;
+  showNotification("Registro cancelado", "success");
+  renderEventsGrid();
+  if (document.querySelector(".dashboard-nav .active")?.textContent === "Mis Eventos") {
+    showMyEvents();
   }
+};
 
-  registrations.splice(registrationIndex, 1)
-
-  // Actualizar contador
-  const event = events.find((e) => e.id === eventId)
-  if (event && event.registeredCount > 0) {
-    event.registeredCount--
-  }
-
-  showNotification("Registro cancelado", "success")
-  showEvents() // Refrescar vista
-}
-
-// Abrir modal para crear/editar evento
-function openEventModal(eventId = null) {
-  const modal = document.getElementById("modal")
-  const title = document.getElementById("modal-title")
-  const form = document.getElementById("event-form")
-
+// ======= EVENT CRUD =======
+const openEventModal = (eventId = null) => {
+  const modal = document.getElementById("modal");
+  const title = document.getElementById("modal-title");
+  const form = document.getElementById("event-form");
+  form.reset();
   if (eventId) {
-    const event = events.find((e) => e.id === eventId)
-    title.textContent = "Editar Evento"
-
-    // Llenar formulario con datos del evento
-    document.getElementById("event-id").value = event.id
-    document.getElementById("event-title").value = event.title
-    document.getElementById("event-description").value = event.description
-    document.getElementById("event-date").value = event.date
-    document.getElementById("event-time").value = event.time
-    document.getElementById("event-location").value = event.location
-    document.getElementById("event-capacity").value = event.capacity
-    document.getElementById("event-category").value = event.category
-    document.getElementById("event-price").value = event.price
+    const event = events.find(e => e.id === eventId);
+    title.textContent = "Editar Evento";
+    document.getElementById("event-id").value = event.id;
+    document.getElementById("event-title").value = event.title;
+    document.getElementById("event-description").value = event.description;
+    document.getElementById("event-date").value = event.date;
+    document.getElementById("event-time").value = event.time;
+    document.getElementById("event-location").value = event.location;
+    document.getElementById("event-capacity").value = event.capacity;
+    document.getElementById("event-category").value = event.category;
+    document.getElementById("event-price").value = event.price;
   } else {
-    title.textContent = "Crear Evento"
-    form.reset()
-    document.getElementById("event-id").value = ""
+    title.textContent = "Crear Evento";
+    document.getElementById("event-id").value = "";
   }
+  modal.style.display = "block";
+};
 
-  modal.style.display = "block"
-}
+const editEvent = (eventId) => openEventModal(eventId);
 
-// Editar evento
-function editEvent(eventId) {
-  openEventModal(eventId)
-}
-
-// Manejar envío del formulario de evento
-function handleEventSubmit(e) {
-  e.preventDefault()
-
-  const eventId = document.getElementById("event-id").value
+const handleEventSubmit = (e) => {
+  e.preventDefault();
+  const eventId = document.getElementById("event-id").value;
   const eventData = {
-    title: document.getElementById("event-title").value,
-    description: document.getElementById("event-description").value,
+    title: document.getElementById("event-title").value.trim(),
+    description: document.getElementById("event-description").value.trim(),
     date: document.getElementById("event-date").value,
     time: document.getElementById("event-time").value,
-    location: document.getElementById("event-location").value,
+    location: document.getElementById("event-location").value.trim(),
     capacity: Number.parseInt(document.getElementById("event-capacity").value),
     category: document.getElementById("event-category").value,
     price: Number.parseFloat(document.getElementById("event-price").value) || 0,
+  };
+  // Validation
+  if (!eventData.title || !eventData.date || !eventData.time || !eventData.location || !eventData.capacity || !eventData.category) {
+    showNotification("Completa todos los campos obligatorios", "error");
+    return;
   }
-
+  if (eventData.capacity <= 0) {
+    showNotification("La capacidad debe ser mayor que 0", "error");
+    return;
+  }
+  if (eventData.price < 0) {
+    showNotification("El precio no puede ser negativo", "error");
+    return;
+  }
   if (eventId) {
-    // Editar evento existente
-    const eventIndex = events.findIndex((e) => e.id === Number.parseInt(eventId))
+    const eventIndex = events.findIndex(e => e.id === Number(eventId));
     if (eventIndex !== -1) {
-      events[eventIndex] = { ...events[eventIndex], ...eventData }
-      showNotification("Evento actualizado exitosamente", "success")
+      // If capacity is reduced, remove registrations if needed
+      if (eventData.capacity < (events[eventIndex].registeredCount ?? 0)) {
+        showNotification("No puedes reducir la capacidad por debajo de los registrados", "error");
+        return;
+      }
+      events[eventIndex] = { ...events[eventIndex], ...eventData };
+      showNotification("Evento actualizado exitosamente", "success");
     }
   } else {
-    // Crear nuevo evento
-    const newEvent = {
-      id: events.length + 1,
+    events.push({
+      id: getNextId(events),
       ...eventData,
       createdBy: currentUser.id,
       registeredCount: 0,
-    }
-    events.push(newEvent)
-    showNotification("Evento creado exitosamente", "success")
+    });
+    showNotification("Evento creado exitosamente", "success");
   }
+  closeModal();
+  renderEventsGrid();
+};
 
-  closeModal()
-  showEvents()
-}
-
-// Eliminar evento
-function deleteEvent(eventId) {
-  if (confirm("¿Estás seguro de que quieres eliminar este evento?")) {
-    const eventIndex = events.findIndex((e) => e.id === eventId)
-    if (eventIndex !== -1) {
-      events.splice(eventIndex, 1)
-
-      // Eliminar registros relacionados
-      registrations = registrations.filter((r) => r.eventId !== eventId)
-
-      showNotification("Evento eliminado", "success")
-      showEvents()
+const deleteEvent = (eventId) => {
+  if (!confirm("¿Estás seguro de que quieres eliminar este evento?")) return;
+  const eventIndex = events.findIndex(e => e.id === eventId);
+  if (eventIndex !== -1) {
+    events.splice(eventIndex, 1);
+    registrations = registrations.filter(r => r.eventId !== eventId);
+    showNotification("Evento eliminado", "success");
+    renderEventsGrid();
+    if (document.querySelector(".dashboard-nav .active")?.textContent === "Mis Eventos") {
+      showMyEvents();
     }
   }
-}
+};
 
-// Eliminar usuario (solo admin)
-function deleteUser(userId) {
-  if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
-    const userIndex = users.findIndex((u) => u.id === userId)
-    if (userIndex !== -1) {
-      users.splice(userIndex, 1)
-
-      // Eliminar registros del usuario
-      registrations = registrations.filter((r) => r.userId !== userId)
-
-      showNotification("Usuario eliminado", "success")
-      showAdmin()
-    }
+// ======= ADMIN ACTIONS =======
+const deleteUser = (userId) => {
+  if (!confirm("¿Estás seguro de que quieres eliminar este usuario?")) return;
+  const userIndex = users.findIndex(u => u.id === userId);
+  if (userIndex !== -1) {
+    users.splice(userIndex, 1);
+    registrations = registrations.filter(r => r.userId !== userId);
+    showNotification("Usuario eliminado", "success");
+    showAdmin();
   }
-}
+};
 
-// Eliminar registro
-function deleteRegistration(regId) {
-  if (confirm("¿Estás seguro de que quieres eliminar este registro?")) {
-    const regIndex = registrations.findIndex((r) => r.id === regId)
-    if (regIndex !== -1) {
-      const registration = registrations[regIndex]
-      registrations.splice(regIndex, 1)
-
-      // Actualizar contador del evento
-      const event = events.find((e) => e.id === registration.eventId)
-      if (event && event.registeredCount > 0) {
-        event.registeredCount--
-      }
-
-      showNotification("Registro eliminado", "success")
-      showAdmin()
-    }
+const deleteRegistration = (regId) => {
+  if (!confirm("¿Estás seguro de que quieres eliminar este registro?")) return;
+  const regIndex = registrations.findIndex(r => r.id === regId);
+  if (regIndex !== -1) {
+    const registration = registrations[regIndex];
+    registrations.splice(regIndex, 1);
+    const event = events.find(e => e.id === registration.eventId);
+    if (event && event.registeredCount > 0) event.registeredCount--;
+    showNotification("Registro eliminado", "success");
+    showAdmin();
   }
-}
+};
 
-// Cerrar modal
-function closeModal() {
-  document.getElementById("modal").style.display = "none"
-}
+// ======= UTILS =======
+const closeModal = () => {
+  document.getElementById("modal").style.display = "none";
+};
 
-// Obtener nombre de categoría
-function getCategoryName(category) {
-  const categories = {
-    technology: "Tecnología",
-    music: "Música",
-    sports: "Deportes",
-    education: "Educación",
-    art: "Arte",
-  }
-  return categories[category] || category
-}
+const getCategoryName = (category) => ({
+  technology: "Tecnología",
+  music: "Música",
+  sports: "Deportes",
+  education: "Educación",
+  art: "Arte",
+}[category] ?? category);
 
-// Mostrar notificación
-function showNotification(message, type = "success") {
-  const notification = document.getElementById("notification")
-  notification.textContent = message
-  notification.className = `notification ${type}`
-  notification.style.display = "block"
-
+const showNotification = (message, type = "success") => {
+  const notification = document.getElementById("notification");
+  notification.textContent = message;
+  notification.className = `notification ${type}`;
+  notification.style.display = "block";
   setTimeout(() => {
-    notification.style.display = "none"
-  }, 3000)
-}
+    notification.style.display = "none";
+  }, 3000);
+};
 
-// Cerrar modal al hacer clic fuera
-window.onclick = (event) => {
-  const modal = document.getElementById("modal")
-  if (event.target === modal) {
-    closeModal()
-  }
-}
+const getNextId = (arr) => arr.length ? Math.max(...arr.map(x => x.id ?? 0)) + 1 : 1;
+
+// ======= EXPORT GLOBALS FOR INLINE HTML HANDLERS =======
+window.logout = logout;
+window.showRegister = showRegister;
+window.showEvents = showEvents;
+window.showMyEvents = showMyEvents;
+window.showAdmin = showAdmin;
+window.openEventModal = openEventModal;
