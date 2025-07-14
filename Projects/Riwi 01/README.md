@@ -129,18 +129,3 @@ git commit -m "Initial commit: Event Management SPA"
 git remote add origin https://github.com/tuusuario/event-management-spa.git
 git push -u origin main
 \`\`\`
-
-## 📝 Notas para Desarrollo
-
-- El proyecto está diseñado para ser simple y educativo
-- Código comentado y bien estructurado
-- Fácil de extender y modificar
-- Ideal para proyectos universitarios
-
-## 🤝 Contribuciones
-
-Este es un proyecto educativo. Las mejoras y sugerencias son bienvenidas.
-
-## 📄 Licencia
-
-Proyecto educativo - Uso libre para fines académicos.
