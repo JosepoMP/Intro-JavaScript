@@ -1,0 +1,22 @@
+{
+  "name": "event-management-spa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Advanced Single Page Application for Event Management with role-based authentication and CRUD operations",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "json-server --watch db.json --port 3001",
+    "start": "concurrently \"npm run server\" \"npm run dev\""
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "json-server": "^0.17.4",
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["spa", "event-management", "javascript", "vite", "json-server"],
+  "author": "Junior Developer",
+  "license": "MIT"
+}
